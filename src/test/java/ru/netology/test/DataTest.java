@@ -1,6 +1,10 @@
 package ru.netology.test;
 
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -23,6 +27,16 @@ public class DataTest {
     DataGenerator.UserInfo user = DataGenerator.Registration.generateUser("ru");
     String firstDate = DataGenerator.generateDate(3);
     String secondDate = DataGenerator.generateDate(5);
+
+    @BeforeAll
+    static void setUpAll () {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownAll () {
+        SelenideLogger.removeListener("allure");
+    }
 
      @Test
      void shouldRegisterByAccountNumber() {
